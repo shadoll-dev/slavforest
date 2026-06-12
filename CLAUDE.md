@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Static website for **Slav Forest** — a Ukrainian timber products company (slavforest.com.ua). The site has two language versions and four HTML pages total:
+Static website for **Slav Forest** — a Ukrainian timber products company (https://www.slavforest.com.ua/). The site has two language versions and four HTML pages total:
 
 | Page | UA | EN |
 |------|----|----|
