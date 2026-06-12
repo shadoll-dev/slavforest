@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Slav Forest - Reports &amp; Documents</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Raleway:500,600,700,800,900,400,300" rel="stylesheet"
+        type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900,300italic,400italic"
+        rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap.min.css"
+        rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+        integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous" />
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/png" href="images/favicon.png" />
+
+    <!-- Site styles -->
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/animate.css" rel="stylesheet" />
+    <link href="css/responsive.css" rel="stylesheet" />
+
+    <style>
+        /* ── Reports page overrides ── */
+        body { overflow-x: hidden; }
+
+        /* Navbar always visible on this page */
+        .navbar {
+            margin-top: 0 !important;
+            opacity: 1 !important;
+        }
+        .navbar-default {
+            background-color: rgba(10, 102, 9, 0.91) !important;
+        }
+        .navbar-nav > li > a {
+            padding-top: 15px !important;
+            padding-bottom: 15px !important;
+        }
+        .navbar-brand img {
+            height: 35px !important;
+            padding-top: 0 !important;
+        }
+
+        /* Page header banner */
+        .reports-header {
+            background: url('images/home.jpg') center / cover no-repeat;
+            position: relative;
+            padding-top: 110px;
+            padding-bottom: 70px;
+            text-align: center;
+        }
+        .reports-header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(33, 33, 33, 0.75);
+        }
+        .reports-header .container { position: relative; }
+        .reports-header h1 {
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 35px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin: 0;
+        }
+        .reports-header .language {
+            position: absolute;
+            top: -60px;
+            right: 0;
+            color: #b5b5b5;
+            font-size: 12px;
+            font-family: 'Raleway', sans-serif;
+        }
+        .reports-header .language a { color: #fff; }
+
+        /* Section */
+        .reports-section {
+            background: #f1f1f1;
+            padding: 70px 0 90px;
+        }
+
+        /* Group heading */
+        .doc-group-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-left: 4px solid #0a6609;
+            padding-left: 14px;
+            margin-bottom: 28px;
+        }
+
+        /* Document cards */
+        .doc-card {
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+            margin-bottom: 30px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+        .doc-card:hover {
+            box-shadow: 0 6px 22px rgba(0, 0, 0, 0.16);
+            transform: translateY(-4px);
+        }
+
+        .doc-card-preview {
+            background: #ebebeb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            padding: 16px;
+            min-height: 230px;
+        }
+        .doc-card-preview canvas {
+            max-height: 200px;
+            width: auto;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+            background: #fff;
+        }
+        .pdf-icon-fallback {
+            color: #0a6609;
+            font-size: 64px;
+            opacity: 0.6;
+        }
+        .pdf-loading {
+            color: #aaa;
+            font-size: 13px;
+            font-family: 'Raleway', sans-serif;
+            text-align: center;
+        }
+        .pdf-loading i { display: block; font-size: 40px; margin-bottom: 8px; color: #0a6609; opacity: 0.4; }
+        .doc-group { margin-bottom: 50px; }
+
+        .doc-card-body {
+            padding: 18px 18px 10px;
+            flex: 1;
+        }
+        .doc-card-body h4 {
+            font-weight: 700;
+            color: #333;
+            margin: 0 0 8px;
+            font-size: 15px;
+            line-height: 1.45;
+        }
+        .doc-card-body p {
+            color: #777;
+            font-size: 13px;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .doc-card-footer {
+            padding: 14px 18px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .doc-card-meta {
+            font-size: 11px;
+            color: #aaa;
+            font-family: 'Raleway', sans-serif;
+        }
+        .btn-download,
+        .btn-download:visited {
+            background: #0a6609;
+            border: 1px solid #0a6609;
+            color: #fff;
+            border-radius: 3px;
+            padding: 8px 18px;
+            font-size: 12px;
+            text-transform: uppercase;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.3s, border-color 0.3s;
+            letter-spacing: 0.5px;
+        }
+        .btn-download:hover {
+            background: #3d4d35;
+            border-color: #3d4d35;
+            color: #fff;
+            text-decoration: none;
+        }
+        .btn-download i { margin-right: 5px; }
+    </style>
+</head>
+
+<body>
+    <!-- Spinner -->
+    <div class="spn_hol">
+        <div class="logo"><img src="images/logo_w.png" alt="" /></div>
+        <div class="spinner">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#navbar-reports">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index_en.html">
+                    <img src="images/logo_w.png" alt="Logo" />
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-reports">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="index_en.html#HOME">Home</a></li>
+                    <li><a href="index_en.html#ABOUT">About Us</a></li>
+                    <li><a href="index_en.html#PRODUCTS">Products</a></li>
+                    <li><a href="index_en.html#LOGISTICS">Logistics</a></li>
+                    <li><a href="index_en.html#CERTIFICATES">Certificates</a></li>
+                    <li class="active"><a href="reports_en.html">Reports</a></li>
+                    <li><a href="index_en.html#CONTACT">Contacts</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page header -->
+    <div class="reports-header">
+        <div class="container">
+            <div class="language">
+                <a href="reports.html">українською</a> | english
+            </div>
+            <h1>Reports &amp; Documents</h1>
+        </div>
+    </div>
+
+    <!-- Documents section -->
+    <section class="reports-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="section_title" style="padding-top:0; padding-bottom:50px;">
+                        <h2>Documents</h2>
+                        <p>Audit reports and management reports of the company.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Audit Reports -->
+            <div class="doc-group">
+                <h3 class="doc-group-title">Audit Reports</h3>
+                <div class="row">
+
+                    <div class="col-md-4 col-sm-6">
+                        <div class="doc-card" data-pdf="docs/2025_Slav_Forest_Audit_Report  Звіт.pdf">
+                            <div class="doc-card-preview">
+                                <div class="pdf-loading"><i class="fas fa-file-pdf"></i>Loading...</div>
+                            </div>
+                            <div class="doc-card-body">
+                                <h4>Audit Report 2025</h4>
+                                <p>Slav Forest company audit report for 2025.</p>
+                            </div>
+                            <div class="doc-card-footer">
+                                <span class="doc-card-meta">2025 &nbsp;·&nbsp; PDF &nbsp;·&nbsp; 2.9 MB</span>
+                                <a href="docs/2025_Slav_Forest_Audit_Report  Звіт.pdf" class="btn-download" download>
+                                    <i class="fas fa-download"></i> Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                        <div class="doc-card" data-pdf="docs/2024_Slav_Forest_Audit_Report.pdf">
+                            <div class="doc-card-preview">
+                                <div class="pdf-loading"><i class="fas fa-file-pdf"></i>Loading...</div>
+                            </div>
+                            <div class="doc-card-body">
+                                <h4>Audit Report 2024</h4>
+                                <p>Slav Forest company audit report for 2024.</p>
+                            </div>
+                            <div class="doc-card-footer">
+                                <span class="doc-card-meta">2024 &nbsp;·&nbsp; PDF &nbsp;·&nbsp; 4.0 MB</span>
+                                <a href="docs/2024_Slav_Forest_Audit_Report.pdf" class="btn-download" download>
+                                    <i class="fas fa-download"></i> Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                        <div class="doc-card" data-pdf="docs/2023_Slav_Forest_Audit_ReportЗвіт2023.pdf">
+                            <div class="doc-card-preview">
+                                <div class="pdf-loading"><i class="fas fa-file-pdf"></i>Loading...</div>
+                            </div>
+                            <div class="doc-card-body">
+                                <h4>Audit Report 2023</h4>
+                                <p>Slav Forest company audit report for 2023.</p>
+                            </div>
+                            <div class="doc-card-footer">
+                                <span class="doc-card-meta">2023 &nbsp;·&nbsp; PDF &nbsp;·&nbsp; 32 MB</span>
+                                <a href="docs/2023_Slav_Forest_Audit_ReportЗвіт2023.pdf" class="btn-download" download>
+                                    <i class="fas fa-download"></i> Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                        <div class="doc-card" data-pdf="docs/2022_Slav_Forest_Audit_Report (1)Висновок2022.pdf">
+                            <div class="doc-card-preview">
+                                <div class="pdf-loading"><i class="fas fa-file-pdf"></i>Loading...</div>
+                            </div>
+                            <div class="doc-card-body">
+                                <h4>Audit Report 2022</h4>
+                                <p>Slav Forest company audit report for 2022.</p>
+                            </div>
+                            <div class="doc-card-footer">
+                                <span class="doc-card-meta">2022 &nbsp;·&nbsp; PDF &nbsp;·&nbsp; 8.2 MB</span>
+                                <a href="docs/2022_Slav_Forest_Audit_Report (1)Висновок2022.pdf" class="btn-download" download>
+                                    <i class="fas fa-download"></i> Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                        <div class="doc-card" data-pdf="docs/2021_Slav_Forest_Audit_Report_ukr.pdf">
+                            <div class="doc-card-preview">
+                                <div class="pdf-loading"><i class="fas fa-file-pdf"></i>Loading...</div>
+                            </div>
+                            <div class="doc-card-body">
+                                <h4>Audit Report 2021</h4>
+                                <p>Slav Forest company audit report for 2021.</p>
+                            </div>
+                            <div class="doc-card-footer">
+                                <span class="doc-card-meta">2021 &nbsp;·&nbsp; PDF &nbsp;·&nbsp; 28 MB</span>
+                                <a href="docs/2021_Slav_Forest_Audit_Report_ukr.pdf" class="btn-download" download>
+                                    <i class="fas fa-download"></i> Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Management Reports -->
+            <div class="doc-group">
+                <h3 class="doc-group-title">Management Reports</h3>
+                <div class="row">
+
+                    <div class="col-md-4 col-sm-6">
+                        <div class="doc-card" data-pdf="docs/Звіт про управління 2025.pdf">
+                            <div class="doc-card-preview">
+                                <div class="pdf-loading"><i class="fas fa-file-pdf"></i>Loading...</div>
+                            </div>
+                            <div class="doc-card-body">
+                                <h4>Management Report 2025</h4>
+                                <p>Company management report for 2025.</p>
+                            </div>
+                            <div class="doc-card-footer">
+                                <span class="doc-card-meta">2025 &nbsp;·&nbsp; PDF &nbsp;·&nbsp; 8.5 MB</span>
+                                <a href="docs/Звіт про управління 2025.pdf" class="btn-download" download>
+                                    <i class="fas fa-download"></i> Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                        <div class="doc-card" data-pdf="docs/Звіт про управління 2024.PDF">
+                            <div class="doc-card-preview">
+                                <div class="pdf-loading"><i class="fas fa-file-pdf"></i>Loading...</div>
+                            </div>
+                            <div class="doc-card-body">
+                                <h4>Management Report 2024</h4>
+                                <p>Company management report for 2024.</p>
+                            </div>
+                            <div class="doc-card-footer">
+                                <span class="doc-card-meta">2024 &nbsp;·&nbsp; PDF &nbsp;·&nbsp; 963 KB</span>
+                                <a href="docs/Звіт про управління 2024.PDF" class="btn-download" download>
+                                    <i class="fas fa-download"></i> Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                        <div class="doc-card" data-pdf="docs/Звіт про  управління 2023 рік.PDF">
+                            <div class="doc-card-preview">
+                                <div class="pdf-loading"><i class="fas fa-file-pdf"></i>Loading...</div>
+                            </div>
+                            <div class="doc-card-body">
+                                <h4>Management Report 2023</h4>
+                                <p>Company management report for 2023.</p>
+                            </div>
+                            <div class="doc-card-footer">
+                                <span class="doc-card-meta">2023 &nbsp;·&nbsp; PDF &nbsp;·&nbsp; 672 KB</span>
+                                <a href="docs/Звіт про  управління 2023 рік.PDF" class="btn-download" download>
+                                    <i class="fas fa-download"></i> Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <section class="copyright">
+        <h2></h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="copy_right_text">
+                        <p>Copyright &copy; 2026. Slav Forest</p>
+                        <p>
+                            Developed by
+                            <a href="https://shadoll.dev/">shadoll</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="scroll_top">
+                        <a href="#"><i class="fa fa-angle-up"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.0.3/wow.min.js"></script>
+
+    <!-- PDF.js for thumbnail rendering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+    <script>
+        // Spinner hide
+        $(window).bind('load', function () { $('.spn_hol').fadeOut(1000); });
+
+        // WOW animations
+        new WOW().init();
+
+        // PDF thumbnail rendering
+        pdfjsLib.GlobalWorkerOptions.workerSrc =
+            'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        document.querySelectorAll('.doc-card[data-pdf]').forEach(function (card) {
+            var rawPath = card.dataset.pdf;
+            var preview = card.querySelector('.doc-card-preview');
+
+            // encodeURI handles spaces and Cyrillic while preserving path separators
+            pdfjsLib.getDocument(encodeURI(rawPath)).promise.then(function (pdf) {
+                var pagesToRender = Math.min(pdf.numPages, 2);
+                preview.innerHTML = '';
+
+                for (var i = 1; i <= pagesToRender; i++) {
+                    (function (pageNum) {
+                        pdf.getPage(pageNum).then(function (page) {
+                            var scale = pagesToRender === 2 ? 0.38 : 0.52;
+                            var viewport = page.getViewport({ scale: scale });
+                            var canvas = document.createElement('canvas');
+                            canvas.height = viewport.height;
+                            canvas.width = viewport.width;
+                            preview.appendChild(canvas);
+                            page.render({ canvasContext: canvas.getContext('2d'), viewport: viewport });
+                        });
+                    })(i);
+                }
+            }).catch(function () {
+                preview.innerHTML = '<i class="fas fa-file-pdf pdf-icon-fallback"></i>';
+            });
+        });
+    </script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-125391384-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'UA-125391384-1');
+    </script>
+</body>
+
+</html>
