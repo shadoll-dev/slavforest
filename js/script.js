@@ -122,20 +122,31 @@ $(function() {
 
 
 // FIX HOME SCREEN HEIGHT
-$(document).ready(function() {
+function fixHomeHeight() {
     "use strict";
+    var windowHeight = $(window).height();
+    var containerHeight = $(".home-container").height();
+    var padTop = windowHeight - containerHeight;
+    $(".home-container").css({
+        'padding-top': Math.round(padTop / 2) + 'px',
+        'padding-bottom': Math.round(padTop / 2) + 'px'
+    });
+}
 
-    setInterval(function() {
-        "use strict";
+$(window).bind('load', function() {
+    "use strict";
+    fixHomeHeight();
+    if (window.location.hash) {
+        var target = $(window.location.hash);
+        if (target.length) {
+            $('html, body').scrollTop(target.offset().top);
+        }
+    }
+});
 
-        var widnowHeight = $(window).height();
-        var containerHeight = $(".home-container").height();
-        var padTop = widnowHeight - containerHeight;
-        $(".home-container").css({
-            'padding-top': Math.round(padTop / 2) + 'px',
-            'padding-bottom': Math.round(padTop / 2) + 'px'
-        });
-    }, 10)
+$(window).resize(function() {
+    "use strict";
+    fixHomeHeight();
 });
 
 
